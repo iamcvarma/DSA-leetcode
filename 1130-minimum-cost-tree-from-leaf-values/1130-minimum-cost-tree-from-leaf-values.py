@@ -1,9 +1,15 @@
 class Solution:
     def mctFromLeafValues(self, arr: List[int]) -> int:
-        res=0
-        while len(arr)>1:
-            i=arr.index(min(arr))
-            mul=min(arr[i-1],arr[i+1]) if 0<i<len(arr)-1 else (arr[i-1] if i else arr[i+1])
-            res+=arr[i]*mul
-            arr.pop(i)
-        return res
+        def solve(i,j):
+            if i>=j:return 0
+            if (i,j) in dp:return dp[(i,j)]
+            ans=inf
+            for k in range(i,j):
+                left=solve(i,k)
+                right=solve(k+1,j)
+                ans=min(ans,left+right+(max(arr[i:k+1])*max(arr[k+1:j+1])))
+            dp[(i,j)]=ans
+            return ans
+        dp={}
+        return solve(0,len(arr)-1)
+                
