@@ -5,12 +5,10 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    count=0
     def goodNodes(self, root: TreeNode,ma=-inf) -> int:
-        if not root:return
+        if not root:return 0
         if root.val>=ma:
-            self.count+=1
-        ma=max(ma,root.val)
-        self.goodNodes(root.left,ma)
-        self.goodNodes(root.right,ma)
-        return self.count
+            count=1
+            ma=root.val
+        else:count=0
+        return count+self.goodNodes(root.left,ma)+self.goodNodes(root.right,ma)
