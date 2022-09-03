@@ -2,7 +2,7 @@ class Solution:
     def canMeasureWater(self,a: int, b: int, z: int) -> bool:
         if a+b<z:return False
         if a<b:a,b=b,a
-        arr=[a,b,-b]
+        arr=[a,b,-a]
         seen=set([0])
         q=deque([0])
         while q:
