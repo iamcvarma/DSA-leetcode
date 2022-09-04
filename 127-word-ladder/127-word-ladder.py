@@ -3,19 +3,22 @@ class Solution:
         words=set(wordList)
         if start==end:return 0
         if end not in words:return 0
-        seen=set([start])
-        q=deque([start])
+        q1,q2=set([start]),set([end])
+        seen=set([start,end])
         dist=1
-        while q:
-            for _ in range(len(q)):
-                curr=q.popleft()
+        while q1:
+            if len(q1)>len(q2):
+                q1,q2=q2,q1
+            new=set()
+            for curr in q1:
                 for i in range(len(curr)):
                     for c in "abcdefghijklmnopqrstuvwxyz":
-                        new=curr[:i]+c+curr[i+1:]
-                        if new==end:return dist+1
-                        if new in words and new not in seen:
-                            q.append(new)
-                            seen.add(new)
+                        word=curr[:i]+c+curr[i+1:]
+                        if word in q2:return dist+1
+                        if word in words and word not in seen:
+                            new.add(word)
+                            seen.add(word)
             dist+=1
+            q1=new
         return 0
                             
