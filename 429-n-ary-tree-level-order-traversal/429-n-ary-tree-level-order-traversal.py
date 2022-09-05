@@ -13,9 +13,11 @@ class Solution:
         q=[root]
         while q:
             new=[]
+            res.append([])
             for node in q:
+                res[-1].append(node.val)
                 for ch in node.children:
                     new.append(ch)
-            res.append([r.val for r in q])
+            
             q=new
         return res
