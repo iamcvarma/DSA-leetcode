@@ -6,14 +6,14 @@
 #         self.right = right
 class Solution:
     def pseudoPalindromicPaths (self, root: Optional[TreeNode]) -> int:
-        def solve(root,seen):
+        def solve(root,mask):
             if not root:return 0
-            
-            if root.val in seen:seen.remove(root.val)
-            else:seen.add(root.val)
-                
+            mask^=1<<root.val
             if not root.left and not root.right:
-                if len(seen)<2:return 1
+                if mask==0 or mask&mask-1==0:
+                    return 1
                 return 0
-            return solve(root.left,seen.copy())+solve(root.right,seen.copy())
-        return solve(root,set())
+            return solve(root.left,mask)+solve(root.right,mask)
+        
+        
+        return solve(root,0)
