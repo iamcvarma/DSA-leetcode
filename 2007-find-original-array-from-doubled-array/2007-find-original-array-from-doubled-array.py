@@ -1,13 +1,12 @@
 class Solution:
     def findOriginalArray(self, arr: List[int]) -> List[int]:
         if len(arr)&1:return []
-        hmap = {}
+        cc =Counter(arr)
         res=[]
-        arr.sort()
-        for n in arr:
-            if not n&1 and n//2 in hmap and hmap[n//2]:
-                hmap[n//2]-=1
-                res.append(n//2)
-            else:hmap[n]= hmap.get(n,0)+1
-        if any(hmap.values()):return []
+        for n in sorted(cc):
+            if 2*n in cc and cc[2*n]:
+                cc[2*n]-=cc[n] if n else cc[n]//2
+                res.extend([n]*cc[n])
+                cc[n]=0
+        if any(cc.values()):return []
         return res
