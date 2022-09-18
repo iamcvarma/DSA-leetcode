@@ -1,12 +1,15 @@
 class Solution:
     def trap(self, arr: List[int]) -> int:
-        res = 0
-        st=[]
-        for i in range(len(arr)):
-            while st and arr[st[-1]]<=arr[i]:
-                curr = st.pop()
-                if st:
-                    j = st[-1]
-                    res+=(min(arr[j],arr[i])-arr[curr])*(i-j-1)
-            st.append(i)
+        left,right = 0,len(arr)-1
+        leftmax=rightmax=0
+        res=0
+        while left<=right:
+            if leftmax<rightmax:
+                leftmax=max(leftmax,arr[left])
+                res+=leftmax-arr[left]
+                left+=1
+            else:
+                rightmax=max(rightmax,arr[right])
+                res+=rightmax-arr[right]
+                right-=1
         return res
