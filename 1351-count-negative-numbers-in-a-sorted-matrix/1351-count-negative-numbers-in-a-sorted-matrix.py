@@ -1,9 +1,15 @@
 class Solution:
     def countNegatives(self, grid: List[List[int]]) -> int:
-        m,n = len(grid),len(grid[0])
-        i,res=0,0
-        for j in range(n-1,-1,-1):
-            while i<m and grid[i][j]>=0:
-                i+=1
-            res+=m-i
+        def bisect(arr,target):
+            s,e = 0,len(arr)
+            while s<e:
+                m = s+e>>1
+                if arr[m]<=target:
+                    e= m
+                else:
+                    s= m+1
+            return e
+        res = 0
+        for arr in grid:
+            res+=len(grid[0])-bisect(arr,-1)
         return res
