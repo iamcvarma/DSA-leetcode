@@ -3,11 +3,11 @@ class Solution:
         i=res=0
         n=len(colors)
         while i<n:
-            heap = []
             curr=colors[i]
+            total,ma=0,0
             while i<n and curr==colors[i]:
-                heapq.heappush(heap,neededTime[i])
+                total+=neededTime[i]
+                ma=max(ma,neededTime[i])
                 i+=1
-            while len(heap)>1:
-                res+=heapq.heappop(heap)
+            res+=total-ma
         return res
