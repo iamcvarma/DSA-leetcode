@@ -10,9 +10,10 @@ class MyCalendarThree:
         self.arr.add((end,0))
         ma=cur=0
         for x,y in self.arr:
-            if y:cur+=1
+            if y:
+                cur+=1
+                ma=max(ma,cur)
             else:cur-=1
-            ma=max(ma,cur)
         return ma
 
 
