@@ -1,6 +1,7 @@
 class Solution:
     def componentValue(self, nums: List[int], edges: List[List[int]]) -> int:
         if len(nums)==1:return 0
+        
         def topo(target):
             arr=nums[:]
             adj=defaultdict(set)
