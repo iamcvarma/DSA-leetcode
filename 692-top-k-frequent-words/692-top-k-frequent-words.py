@@ -1,22 +1,22 @@
-class Freq_obj:
-    def __init__(self,word,freq):
-        self.word=word
-        self.freq=freq
-        
+class WordWrap:
+    def __init__(self,word):
+        self.word = word
+        return 
+    
     def __lt__(self,other):
-        if self.freq!=other.freq:
-            return self.freq<other.freq
-        else:
-            return self.word>other.word
+        return self.word>other.word
 
 class Solution:
     def topKFrequent(self, words: List[str], k: int) -> List[str]:
-        heap,res=[],[]
-        for word, freq in Counter(words).items():
-            if len(heap)<k:
-                heapq.heappush(heap,Freq_obj(word,freq))
-            else:
-                heapq.heappushpop(heap,Freq_obj(word,freq))
-        for _ in range(k):
-            res.append(heapq.heappop(heap).word)
+        freq = Counter(words)
+        arr = [(freq,word) for word,freq in freq.items()]
+        heap=[]
+        for freq,word in arr:
+            heapq.heappush(heap,(freq,WordWrap(word)))
+            if len(heap)>k:
+                heapq.heappop(heap)
+    
+        res=[]
+        while heap:
+            res.append(heapq.heappop(heap)[1].word)
         return res[::-1]
