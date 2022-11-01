@@ -1,11 +1,10 @@
 class Solution:
     def findJudge(self, n: int, trust: List[List[int]]) -> int:
-        if not trust and n==1:return 1
-        deg=defaultdict(int)
-        for x,y in trust:
-            deg[x]-=1
-            deg[y]+=1
-        for g in deg:
-            if deg[g]==n-1:
-                return g
+        inDeg,outDeg = [0]*n,[0]*n
+        for x, y in trust:
+            inDeg[y-1]+=1
+            outDeg[x-1]+=1
+        for i in range(n):
+            if outDeg[i]==0 and inDeg[i]==n-1:
+                return i+1
         return -1
