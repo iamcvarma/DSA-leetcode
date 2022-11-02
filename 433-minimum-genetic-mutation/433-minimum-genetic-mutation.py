@@ -1,18 +1,19 @@
 class Solution:
     def minMutation(self, start: str, end: str, bank: List[str]) -> int:
-        bank=set(bank)
-        seen=set([start])
-        q=deque([start])
-        dist=0
+        bank = set(bank)
+        if end not in bank:return -1
+        q = deque([end])
+        steps=1
         while q:
             for _ in range(len(q)):
-                curr=q.popleft()
-                if curr==end:return dist
+                curr = q.popleft()
                 for i in range(8):
-                    for c in "ACGT":
-                        new=curr[:i]+c+curr[i+1:]
-                        if new in bank and new not in seen:
+                    for c in 'ACGT':
+                        if c==curr[i]:continue
+                        new = curr[:i]+c+curr[i+1:]
+                        if new == start:return steps
+                        if new in bank:
                             q.append(new)
-                            seen.add(new)
-            dist+=1
+                            bank.remove(new)
+            steps+=1
         return -1
