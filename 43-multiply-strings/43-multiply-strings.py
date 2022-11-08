@@ -1,13 +1,13 @@
 class Solution:
     def multiply(self, a: str, b: str) -> str:
-        res=[0]*(len(a)+len(b))
-        a=a[::-1]
-        b=b[::-1]
-        for i,x in enumerate(a):
-            for j,y in enumerate(b):
-                res[i+j]+=int(x)*int(y)
-        for i in range(len(res)-1):
-            res[i+1]+=res[i]//10
-            res[i]%=10
+        m,n = len(a),len(b)
+        res=[0]*(m+n)
+        
+        for i in range(m):
+            for j in range(n):
+                ans = res[i+j]+int(a[m-i-1])*int(b[n-j-1])
+                res[i+j] = ans%10
+                res[i+j+1] +=ans//10
+    
         res = "".join(map(str,res))[::-1]
         return str(int(res))
