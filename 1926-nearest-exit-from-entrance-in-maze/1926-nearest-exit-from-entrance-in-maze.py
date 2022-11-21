@@ -1,17 +1,20 @@
 class Solution:
-    def nearestExit(self, grid: List[List[str]], ent: List[int]) -> int:
-        m,n=len(grid),len(grid[0])
-        q=[(ent[0],ent[1])]
-        grid[ent[0]][ent[1]]='+'
+    def nearestExit(self, maze: List[List[str]], entrance: List[int]) -> int:
+        m,n = len(maze),len(maze[0])
+        q = deque([tuple(entrance)])
+        a,b = entrance
+        maze[a][b]='+'
         steps=0
         while q:
-            new=[]
-            for i,j in q:
-                if (i==0 or i==m-1 or j==0 or j==n-1) and [i,j]!=ent:return steps
+            for _ in range(len(q)):
+                i,j = q.popleft()
+                if i==0 or j==0 or i==m-1 or j==n-1:
+                    if [i,j]!=entrance:
+                        return steps
                 for x,y in ((i+1,j),(i-1,j),(i,j+1),(i,j-1)):
-                    if -1<x<m and -1<y<n and grid[x][y]!='+':
-                        new.append((x,y))
-                        grid[x][y]='+'
+                    if -1<x<m and -1<y<n and maze[x][y]=='.':
+                        q.append((x,y))
+                        maze[x][y]='+'
             steps+=1
-            q=new
         return -1
+                
