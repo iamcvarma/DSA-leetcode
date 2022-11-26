@@ -13,7 +13,7 @@ class Solution:
         pre = [0]*(n+1)
         for i in range(n):
             pre[i+1] = pre[i]+nums[i]
-        for i in range(n+1):
+        for i in range(bsearch(0,n,target),n+1):
             if pre[i]<target:continue
             index = bsearch(0,i,pre[i]-target)
             res=min(res,i-index)
