@@ -1,22 +1,24 @@
 class RandomizedSet:
 
     def __init__(self):
-        self.hmap={}
+        self.seen = {}
         self.arr=[]
 
     def insert(self, val: int) -> bool:
-        if val in self.hmap:return False
-        self.hmap[val]=len(self.arr)
+        if val in self.seen:return False
+        self.seen[val] = len(self.arr)
         self.arr.append(val)
         return True
-    
+
     def remove(self, val: int) -> bool:
-        if val not in self.hmap:return False
-        i = self.hmap[val]
-        self.arr[-1],self.arr[i] = self.arr[i],self.arr[-1]
-        self.hmap[self.arr[i]]=i
-        del self.hmap[self.arr.pop()]
+        if val not in self.seen:return False
+        i = self.seen[val]
+        self.arr[i],self.arr[-1] = self.arr[-1],self.arr[i]
+        self.seen[self.arr[i]] = i
+        del self.seen[self.arr.pop()]
         return True
+        
+        
 
     def getRandom(self) -> int:
         return random.choice(self.arr)
