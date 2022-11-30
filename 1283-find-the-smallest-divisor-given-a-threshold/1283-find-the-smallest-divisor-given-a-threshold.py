@@ -1,16 +1,13 @@
 class Solution:
-    def smallestDivisor(self, nums: List[int], target: int) -> int:
-        if sum(nums)<=target:return 1
-        
-        def cond(m):
-            return sum((n-1)//m+1 for n in nums)<=target
+    def smallestDivisor(self, nums: List[int], threshold: int) -> int:
+        def check(m):
+            return sum(ceil(n/m) for n in nums)<=threshold
         
         s,e = 1,max(nums)
         while s<e:
             m = s+e>>1
-            if cond(m):
-                e = m
+            if check(m):
+                e=m
             else:
-                s = m+1
+                s=m+1
         return e
-        
