@@ -1,8 +1,12 @@
 class Solution:
     def halvesAreAlike(self, s: str) -> bool:
-        V = "aeiouAEIOU"
+        a,b=0,0
         n = len(s)//2
-        vFilter = lambda x: x in V
-        a = len(list(filter(vFilter,s[:n])))
-        b = len(list(filter(vFilter,s[n:])))
+        for i,c in enumerate(s):
+            if c in "aeiouAEIOU":
+                if i<n:
+                    a+=1
+                else:
+                    b+=1
         return a==b
+                    
