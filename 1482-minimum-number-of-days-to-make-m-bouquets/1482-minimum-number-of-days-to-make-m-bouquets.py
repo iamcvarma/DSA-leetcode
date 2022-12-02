@@ -12,7 +12,7 @@ class Solution:
             return curr>=bq
         
         if len(bloomDay)<bq*k:return -1
-        s,e =1,max(bloomDay)
+        s,e =min(bloomDay),max(bloomDay)
         while s<e:
             m = s+e>>1
             if check(m):
