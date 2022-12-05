@@ -5,20 +5,19 @@
 #         self.left = left
 #         self.right = right
 class Solution:
-    def findHeight(self,root,left):
-        count=0
-        while root:
-            count+=1
-            root = root.left if left else root.right
-        return count
-    
-    
-    def countNodes(self, root,left=None,right=None) -> int:
+    def countNodes(self, root: Optional[TreeNode]) -> int:
         if not root:return 0
-        if not left:left = self.findHeight(root,True)
-        if not right:right = self.findHeight(root,False)
+        leftH,rightH=0,0
+        curr = root.left
+        while curr:
+            leftH+=1
+            curr=curr.left
+        curr = root.right
+        while curr:
+            rightH+=1
+            curr = curr.left
         
-        if left==right:
-            return 2**(left)-1
-        return self.countNodes(root.left,left-1,None)+self.countNodes(root.right,None,right-1)+1
-            
+        if leftH==rightH:
+            return 2**leftH+self.countNodes(root.right)
+        else:
+            return 2**rightH+self.countNodes(root.left)
